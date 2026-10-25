@@ -1,14 +1,14 @@
 /**
- * Función que permite tomar una carta del deck.
- * @param {string[]} deck - Deck de cartas disponible.
- * @returns {string} La carta pedida del deck.
+ * Extrae la última carta del mazo.
+ * @param {string[]} mazo - Mazo de cartas disponible.
+ * @returns {string} La carta extraída del mazo.
  */
 // Esta función me permite tomar una carta
-export const pedirCarta = (deck) => {
+export const sacarCartaDelMazo = (mazo) => {
 
-    if ( deck.length === 0 ) {
-        throw 'No hay cartas en el deck';
+    if ( mazo.length === 0 ) {
+        throw 'No hay cartas en el mazo';
     }
-    const carta = deck.pop();
+    const carta = mazo.pop();
     return carta;
 }

@@ -4,7 +4,7 @@
  * @returns {number} Valor numérico de la carta.
  */
 // pedirCarta();
-export const valorCarta = ( carta ) => {
+export const obtenerValorCarta = ( carta ) => {
 
     const valor = carta.substring(0, carta.length - 1);
     return ( isNaN( valor ) ) ? 

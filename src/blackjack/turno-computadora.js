@@ -1,39 +1,28 @@
-import { pedirCarta, valorCarta, actualizarPuntos, mostrarCarta } from "./index";
+import { sacarCartaDelMazo } from './pedir-carta.js';
+import { obtenerValorCarta } from './valor-carta.js';
 
 /**
- * Función que representa el turno de la computadora en el juego de Blackjack.
- * @param {number} puntosMinimos - Puntos mínimos que la computadora debe superar.
- * @param {Array<string>} deck - Deck de cartas disponible.
- * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
+ * Calcula la jugada de la computadora y devuelve las cartas que tomó.
+ * @param {number} puntosObjetivo - Puntuación que intenta alcanzar o superar.
+ * @param {string[]} mazo - Mazo de cartas disponible.
+ * @returns {Object} - Un objeto con los puntos y las cartas de la computadora.
  */
-
-// turno de la computadora
-export const turnoComputadora = ( puntosMinimos, deck ) => {
+export const obtenerJugadaComputadora = ( puntosObjetivo, mazo ) => {
 
     let puntosComputadora = 0;
+    const cartasComputadora = [];
 
     do {
-        const carta = pedirCarta(deck);
+        const carta = sacarCartaDelMazo(mazo);
+        cartasComputadora.push(carta);
 
-        puntosComputadora = puntosComputadora + valorCarta( carta );
-        actualizarPuntos(puntosComputadora, 1);
-        mostrarCarta(carta, 1);
+        puntosComputadora += obtenerValorCarta( carta );
 
-        if( puntosMinimos > 21 ) {
+        if( puntosObjetivo > 21 ) {
             break;
         }
 
-    } while(  (puntosComputadora < puntosMinimos)  && (puntosMinimos <= 21 ) );
+    } while(  (puntosComputadora < puntosObjetivo)  && (puntosObjetivo <= 21 ) );
 
-    setTimeout(() => {
-        if( puntosComputadora === puntosMinimos ) {
-            alert('Nadie gana :(');
-        } else if ( puntosMinimos > 21 ) {
-            alert('Computadora gana')
-        } else if( puntosComputadora > 21 ) {
-            alert('Jugador Gana');
-        } else {
-            alert('Computadora Gana')
-        }
-    }, 100 );
+    return { puntos: puntosComputadora, cartas: cartasComputadora };
 }

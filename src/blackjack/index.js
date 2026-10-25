@@ -1,5 +1,14 @@
-export { crearDeck } from './crear-deck.js';
-export { pedirCarta } from './pedir-carta.js';
-export { valorCarta } from './valor-carta.js';
-export { turnoComputadora } from './turno-computadora.js';
-export { actualizarPuntos, mostrarCarta, limpiarCartas, desactivarBotones, activarBotones } from './interfaz.js';
+export { crearMazo } from './crear-deck.js';
+export { sacarCartaDelMazo } from './pedir-carta.js';
+export { obtenerValorCarta } from './valor-carta.js';
+export { obtenerJugadaComputadora } from './turno-computadora.js';
+export {
+    actualizarMarcador,
+    mostrarCartaEnMesa,
+    limpiarMesa,
+    deshabilitarBotonesPartida,
+    habilitarBotonesPartida
+} from './interfaz.js';
+export { registrarEventosJuego } from './eventos.js';
+export { tomarCartaParaJugador } from './jugador.js';
+export { iniciarPartida, procesarCartaJugador, plantarseJugador } from './juego.js';

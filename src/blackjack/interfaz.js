@@ -9,7 +9,7 @@ const puntosHTML = document.querySelectorAll('small');
  * @param {number} turno - Turno del jugador (0 para jugador, 1 para computadora).
  * @returns {void} No retorna ningún valor, solo actualiza el DOM.
  */
-export const actualizarPuntos = (puntos, turno) => puntosHTML[turno].innerText = puntos;
+export const actualizarMarcador = (puntos, turno) => puntosHTML[turno].innerText = puntos;
 
 /**
  * Función que muestra una carta en la interfaz del juego de Blackjack.
@@ -17,7 +17,7 @@ export const actualizarPuntos = (puntos, turno) => puntosHTML[turno].innerText =
  * @param {number} turno - Turno del jugador (0 para jugador, 1 para computadora).
  * @returns {void} No retorna ningún valor, solo actualiza el DOM.
  */
-export const mostrarCarta = (carta, turno) => {
+export const mostrarCartaEnMesa = (carta, turno) => {
 
     // const divCartas = document.querySelector(turno === 0 ? '#jugador-cartas' : '#computadora-cartas');
     const imgCarta  = document.createElement('img');
@@ -31,13 +31,13 @@ export const mostrarCarta = (carta, turno) => {
  * Función que limpia las cartas mostradas en la interfaz del juego de Blackjack.
  * @returns {void} No retorna ningún valor, solo actualiza el DOM.
  */
-export const limpiarCartas = () => divCartas.forEach(div => div.innerHTML = '');
+export const limpiarMesa = () => divCartas.forEach(div => div.innerHTML = '');
 
 /**
  * Función que desactiva los botones de pedir y detener en la interfaz del juego de Blackjack.
  * @returns {void} No retorna ningún valor, solo actualiza el DOM.
  */
-export const desactivarBotones = () => {
+export const deshabilitarBotonesPartida = () => {
 
     btnPedir.disabled   = true;
     btnDetener.disabled = true;
@@ -47,7 +47,7 @@ export const desactivarBotones = () => {
  * Función que activa los botones de pedir y detener en la interfaz del juego de Blackjack.
  * @returns {void} No retorna ningún valor, solo actualiza el DOM.
  */
-export const activarBotones = () => {
+export const habilitarBotonesPartida = () => {
 
     btnPedir.disabled   = false;
     btnDetener.disabled = false;

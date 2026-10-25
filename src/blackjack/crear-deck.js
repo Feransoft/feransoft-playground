@@ -4,26 +4,26 @@ const tiposDeCarta      = ['C','D','H','S'];
 const tiposEspeciales   = ['A','J','Q','K'];
 
 /**
- * Función que crea un nuevo deck de cartas para el juego de Blackjack.
- * @returns {string[]} Retorna un array con las cartas del deck mezcladas.
+ * Crea y mezcla un mazo de cartas para el juego de Blackjack.
+ * @returns {string[]} El mazo de cartas mezclado.
  */
-export const crearDeck = () => {
+export const crearMazo = () => {
 
-    let deck = [];
+    let mazo = [];
 
     for( let i = 2; i <= 10; i++ ) {
         for( let tipo of tiposDeCarta ) {
-            deck.push( i + tipo);
+            mazo.push( i + tipo);
         }
     }
 
     for( let tipo of tiposDeCarta ) {
         for( let esp of tiposEspeciales ) {
-            deck.push( esp + tipo);
+            mazo.push( esp + tipo);
         }
     }
-    // console.log( deck );
-    deck = _.shuffle( deck );
-    console.log( deck );
-    return deck;
+    // console.log( mazo );
+    mazo = _.shuffle( mazo );
+    console.log( mazo );
+    return mazo;
 }
