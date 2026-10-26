@@ -11,31 +11,35 @@ import {
 
 let mazo = [];
 let cartasJugador = [];
-let puntosJugador;
+let puntosJugador = 0;
+let partidaActiva = false;
 
 /**
- * Inicia el juego de Blackjack
- * @returns {void} No retorna ningún valor, solo inicializa el juego y actualiza el DOM.º
+ * Inicia una partida nueva y reinicia el estado de la mesa.
  */
 export const iniciarPartida = () => {
-
     mazo = crearMazo();
     cartasJugador = [];
     puntosJugador = 0;
+    partidaActiva = true;
 
-    console.clear();
     actualizarMarcador(0, 0);
     actualizarMarcador(0, 1);
     limpiarMesa();
     habilitarBotonesPartida();
 };
+
 /**
- * Permite al jugador pedir una carta
- * Actualiza los puntos y muestra la carta en el DOM.
- * Llama al turno de la computadora si el jugador alcanza o supera 21 puntos.
- * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
+ * Permite al jugador pedir una carta mientras la partida está activa.
  */
 export const procesarCartaJugador = () => {
+    if (!partidaActiva) return;
+
+    if (mazo.length === 0) {
+        finalizarPartida();
+        alert('No quedan cartas en el mazo. La partida ha terminado.');
+        return;
+    }
 
     const { puntos, carta, mano } = tomarCartaParaJugador(mazo, cartasJugador);
     cartasJugador = mano;
@@ -44,44 +48,55 @@ export const procesarCartaJugador = () => {
     actualizarMarcador(puntosJugador, 0);
     mostrarCartaEnMesa(carta, 0);
 
-    if ( puntosJugador >= 21 ) {
+    if (puntosJugador > 21) {
+        finalizarPartida();
+        alert('Te has pasado de 21. Gana la computadora.');
+        return;
+    }
 
-        console.warn(puntosJugador > 21 ? 'Lo siento mucho, perdiste' : '¡21, genial!');
-
-        resolverTurnoComputadora(puntosJugador, mazo);
+    if (puntosJugador === 21) {
+        resolverTurnoComputadora();
     }
 };
 
 /**
- * Permite al jugador detener su turno y pasar el turno a la computadora.
- * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
+ * El jugador se planta y cede el turno a la computadora.
  */
-export const plantarseJugador = () => resolverTurnoComputadora(puntosJugador, mazo);
+export const plantarseJugador = () => {
+    if (!partidaActiva || cartasJugador.length === 0) return;
+    resolverTurnoComputadora();
+};
 
 /**
- * Juega el turno de la computadora después de que el jugador se detiene.
- * Actualiza los puntos y cartas de la computadora en el DOM y muestra el resultado del juego.
- * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
+ * Finaliza la partida y bloquea las acciones del jugador.
  */
-const resolverTurnoComputadora = ( puntosObjetivo, mazo ) => {
-
+const finalizarPartida = () => {
+    partidaActiva = false;
     deshabilitarBotonesPartida();
+};
 
-    const { puntos, cartas } = obtenerJugadaComputadora(puntosObjetivo, mazo);
+/**
+ * Ejecuta el turno de la computadora y determina el resultado.
+ */
+const resolverTurnoComputadora = () => {
+    if (!partidaActiva) return;
+
+    finalizarPartida();
+
+    const { puntos, cartas } = obtenerJugadaComputadora(puntosJugador, mazo);
 
     cartas.forEach(carta => mostrarCartaEnMesa(carta, 1));
     actualizarMarcador(puntos, 1);
+
     setTimeout(() => {
-        if (puntosJugador > 21) {
-            alert('Computadora gana');
-        } else if (puntos > 21) {
-            alert('Jugador gana');
+        if (puntos > 21) {
+            alert('La computadora se ha pasado. ¡Gana el jugador!');
         } else if (puntos === puntosJugador) {
-            alert('Nadie gana :(');
+            alert('Empate.');
         } else if (puntos > puntosJugador) {
-            alert('Computadora gana');
+            alert('Gana la computadora.');
         } else {
-            alert('Jugador gana');
+            alert('¡Gana el jugador!');
         }
     }, 100);
 };
