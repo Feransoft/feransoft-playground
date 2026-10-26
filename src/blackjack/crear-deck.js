@@ -22,8 +22,7 @@ export const crearMazo = () => {
             mazo.push( esp + tipo);
         }
     }
-    // console.log( mazo );
+
     mazo = _.shuffle( mazo );
-    console.log( mazo );
     return mazo;
 }

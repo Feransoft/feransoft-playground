@@ -1,5 +1,5 @@
 import { sacarCartaDelMazo } from './pedir-carta.js';
-import { obtenerValorCarta } from './valor-carta.js';
+import { calcularPuntosMano } from './valor-carta.js';
 
 /**
  * Calcula la jugada de la computadora y devuelve las cartas que tomó.
@@ -16,7 +16,7 @@ export const obtenerJugadaComputadora = ( puntosObjetivo, mazo ) => {
         const carta = sacarCartaDelMazo(mazo);
         cartasComputadora.push(carta);
 
-        puntosComputadora += obtenerValorCarta( carta );
+        puntosComputadora = calcularPuntosMano(cartasComputadora);
 
         if( puntosObjetivo > 21 ) {
             break;

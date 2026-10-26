@@ -1,6 +1,6 @@
 export { crearMazo } from './crear-deck.js';
 export { sacarCartaDelMazo } from './pedir-carta.js';
-export { obtenerValorCarta } from './valor-carta.js';
+export { obtenerValorCarta, calcularPuntosMano } from './valor-carta.js';
 export { obtenerJugadaComputadora } from './turno-computadora.js';
 export {
     actualizarMarcador,

@@ -10,6 +10,7 @@ import {
 } from './interfaz.js';
 
 let mazo = [];
+let cartasJugador = [];
 let puntosJugador;
 
 /**
@@ -19,6 +20,7 @@ let puntosJugador;
 export const iniciarPartida = () => {
 
     mazo = crearMazo();
+    cartasJugador = [];
     puntosJugador = 0;
 
     console.clear();
@@ -35,7 +37,8 @@ export const iniciarPartida = () => {
  */
 export const procesarCartaJugador = () => {
 
-    const { puntos, carta } = tomarCartaParaJugador(mazo, puntosJugador);
+    const { puntos, carta, mano } = tomarCartaParaJugador(mazo, cartasJugador);
+    cartasJugador = mano;
     puntosJugador = puntos;
 
     actualizarMarcador(puntosJugador, 0);
@@ -53,10 +56,7 @@ export const procesarCartaJugador = () => {
  * Permite al jugador detener su turno y pasar el turno a la computadora.
  * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
  */
-export const plantarseJugador = () => {
-    deshabilitarBotonesPartida();
-    resolverTurnoComputadora(puntosJugador, mazo);
-};
+export const plantarseJugador = () => resolverTurnoComputadora(puntosJugador, mazo);
 
 /**
  * Juega el turno de la computadora después de que el jugador se detiene.
@@ -64,12 +64,13 @@ export const plantarseJugador = () => {
  * @returns {void} No retorna ningún valor, solo realiza acciones en el DOM y muestra alertas.
  */
 const resolverTurnoComputadora = ( puntosObjetivo, mazo ) => {
+
+    deshabilitarBotonesPartida();
+
     const { puntos, cartas } = obtenerJugadaComputadora(puntosObjetivo, mazo);
 
     cartas.forEach(carta => mostrarCartaEnMesa(carta, 1));
     actualizarMarcador(puntos, 1);
-    deshabilitarBotonesPartida();
-
     setTimeout(() => {
         if (puntosJugador > 21) {
             alert('Computadora gana');

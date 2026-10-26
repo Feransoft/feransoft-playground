@@ -1,16 +1,16 @@
 import { sacarCartaDelMazo } from './pedir-carta.js';
-import { obtenerValorCarta } from './valor-carta.js';
+import { calcularPuntosMano } from './valor-carta.js';
 
 /**
- * Toma una carta para el jugador y calcula sus nuevos puntos.
+ * Toma una carta para el jugador y calcula los puntos de su mano.
  * @param {string[]} mazo - El mazo de cartas.
- * @param {number} puntosActuales - Los puntos actuales del jugador.
- * @returns {Object} - Un objeto con los puntos actualizados y la carta tomada
+ * @param {string[]} cartasJugador - Cartas actuales del jugador.
+ * @returns {Object} Carta tomada, mano nueva y puntos actualizados.
  */
-export const tomarCartaParaJugador = (mazo, puntosActuales) => {
+export const tomarCartaParaJugador = (mazo, cartasJugador) => {
     const carta = sacarCartaDelMazo(mazo);
-    
-    puntosActuales += obtenerValorCarta( carta );
+    const mano = [...cartasJugador, carta];
+    const puntos = calcularPuntosMano(mano);
 
-    return { puntos: puntosActuales, carta };
+    return { puntos, carta, mano };
 };
